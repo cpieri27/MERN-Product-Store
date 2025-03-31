@@ -62,7 +62,7 @@ const ProductCard = ({product}) => {
                     ${product.price}
                 </Text>
                 <HStack spacing={2}>
-                    <Drawer.Root>
+                    <Drawer.Root key={'top'} placement={'top'}>
                         <Drawer.Trigger asChild>
                             <Button color={iconColor} bg={editButtonColor}>
                                 <MdOutlineEdit />

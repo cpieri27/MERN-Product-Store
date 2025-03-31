@@ -65,55 +65,55 @@ return <Container maxW={'1140px'} px={4}>
             <Link to={'/'}>Product Store</Link>
         </Text>
         <HStack spacing={2} alignItems={'center'}>
-            <Drawer.Root>
-            <Drawer.Trigger asChild>
-                <Button bg={buttonColor} color={textColor}>
-                    <CiSquarePlus />
-                </Button>
-            </Drawer.Trigger>
-            <Portal>
-                <Drawer.Backdrop />
-                <Drawer.Positioner padding="4">
-                    <Drawer.Content rounded="md">
-                        <Drawer.Header>
-                            <Drawer.Title>Create Product</Drawer.Title>
-                        </Drawer.Header>
-                        <Drawer.Body>
-                            <VStack spacing={4}>
-                                <Input 
-                                    placeholder={'Product Name'}
-                                    name='name'
-                                    value={newProduct.name}
-                                    onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value})}
-                                    style={{ border: '1px solid', borderRadius: '4px' }}
-                                />
-                                <Input 
-                                    placeholder='Product Price'
-                                    name='price'
-                                    value={newProduct.price}
-                                    onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value})}
-                                    style={{ border: '1px solid', borderRadius: '4px' }}
-                                />
-                                <Input 
-                                    placeholder='Product Image'
-                                    name='image'
-                                    value={newProduct.image}
-                                    onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value})}
-                                    style={{ border: '1px solid', borderRadius: '4px' }}
-                                />
-                            </VStack>
-                        </Drawer.Body>
-                        <Drawer.Footer>
-                            <Drawer.CloseTrigger asChild>
-                                <Button variant="outline">Cancel</Button>
-                            </Drawer.CloseTrigger>
-                            <Drawer.CloseTrigger asChild>
-                                <Button variant={'surface'} onClick={() => handleAddProduct()}>Create</Button>
-                            </Drawer.CloseTrigger>
-                        </Drawer.Footer>
-                    </Drawer.Content>
-                </Drawer.Positioner>
-            </Portal>
+            <Drawer.Root key={'top'} placement={'top'}>
+                <Drawer.Trigger asChild>
+                    <Button bg={buttonColor} color={textColor}>
+                        <CiSquarePlus />
+                    </Button>
+                </Drawer.Trigger>
+                <Portal>
+                    <Drawer.Backdrop />
+                    <Drawer.Positioner padding="4">
+                        <Drawer.Content rounded="md">
+                            <Drawer.Header>
+                                <Drawer.Title>Create Product</Drawer.Title>
+                            </Drawer.Header>
+                            <Drawer.Body>
+                                <VStack spacing={4}>
+                                    <Input 
+                                        placeholder={'Product Name'}
+                                        name='name'
+                                        value={newProduct.name}
+                                        onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value})}
+                                        style={{ border: '1px solid', borderRadius: '4px' }}
+                                    />
+                                    <Input 
+                                        placeholder='Product Price'
+                                        name='price'
+                                        value={newProduct.price}
+                                        onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value})}
+                                        style={{ border: '1px solid', borderRadius: '4px' }}
+                                    />
+                                    <Input 
+                                        placeholder='Product Image'
+                                        name='image'
+                                        value={newProduct.image}
+                                        onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value})}
+                                        style={{ border: '1px solid', borderRadius: '4px' }}
+                                    />
+                                </VStack>
+                            </Drawer.Body>
+                            <Drawer.Footer>
+                                <Drawer.CloseTrigger asChild>
+                                    <Button variant="outline">Cancel</Button>
+                                </Drawer.CloseTrigger>
+                                <Drawer.CloseTrigger asChild>
+                                    <Button variant={'surface'} onClick={() => handleAddProduct()}>Create</Button>
+                                </Drawer.CloseTrigger>
+                            </Drawer.Footer>
+                        </Drawer.Content>
+                    </Drawer.Positioner>
+                </Portal>
             </Drawer.Root>
 
             <Button onClick={toggleColorMode} bg={buttonColor} color={textColor}>
