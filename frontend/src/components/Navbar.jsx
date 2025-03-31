@@ -15,29 +15,39 @@ const Navbar = () => {
   const gradientEnd = 'blue.500';
 
   const [newProduct, setNewProduct] = useState({
-      name: '',
-      price: '',
-      image: '',
-  });
+        name: '',
+        price: '',
+        image: '',
+    });
 
-  const { createProduct } = useProductStore()
+    const { createProduct } = useProductStore()
 
-  const handleAddProduct = async () => {
-      const { success, message } = await createProduct(newProduct);
+    const handleAddProduct = async () => {
+        // Clean the price: keep digits and the first decimal
+        const rawPrice = newProduct.price;
+        const cleanedPrice = parseFloat(
+            rawPrice.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')
+        );
+    
+        const finalProduct = {
+            ...newProduct,
+            price: isNaN(cleanedPrice) ? '' : cleanedPrice.toFixed(2),
+        };
+        const { success, message } = await createProduct(finalProduct);
 
-      if(!success) {
-          toaster.create({
-              description: message,
-              type: 'error',
-          });
-      } else {
-          toaster.create({
-              description: message,
-              type: 'success',
-          });   
-          
-          setNewProduct({ name: "", price: "", image: ""});
-      }
+        if(!success) {
+            toaster.create({
+                description: message,
+                type: 'error',
+            });
+        } else {
+            toaster.create({
+                description: message,
+                type: 'success',
+            });   
+            
+            setNewProduct({ name: "", price: "", image: ""});
+        }
 
   };
 
@@ -88,16 +98,10 @@ return <Container maxW={'1140px'} px={4}>
                                         style={{ border: '1px solid', borderRadius: '4px' }}
                                     />
                                     <Input 
-                                        placeholder="Product Price"
-                                        name="price"
+                                        placeholder='Product Price'
+                                        name='price'
                                         value={newProduct.price}
-                                        onChange={(e) => {
-                                            const rawValue = e.target.value;
-                                            const sanitizedValue = rawValue
-                                            .replace(/[^0-9.]/g, '')     // remove non-numeric/non-dot chars
-                                            .replace(/(\..*?)\..*/g, '$1'); // keep only the first dot
-                                            setNewProduct({ ...newProduct, price: sanitizedValue });
-                                        }}
+                                        onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value})}
                                         style={{ border: '1px solid', borderRadius: '4px' }}
                                     />
                                     <Input 

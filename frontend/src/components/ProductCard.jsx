@@ -30,19 +30,31 @@ const ProductCard = ({product}) => {
     };
 
     const handleUpdateProduct = async (pid, updatedProduct) => {
-        const { success, message } = await updateProduct(pid, updatedProduct);
-        
+        // Clean the price: keep digits and the first decimal
+        const rawPrice = updatedProduct.price;
+        const cleanedPrice = parseFloat(
+            rawPrice.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')
+        );
+    
+        const finalProduct = {
+            ...updatedProduct,
+            price: isNaN(cleanedPrice) ? '' : cleanedPrice.toFixed(2),
+        };
+    
+        const { success, message } = await updateProduct(pid, finalProduct);
+    
         if (!success) {
             toaster.create({
                 description: message,
-                type: 'error'
-        })}
-        else {
+                type: 'error',
+            });
+        } else {
             toaster.create({
                 description: message,
-                type: 'success'
-        })}
-    }
+                type: 'success',
+            });
+        }
+    };
 
 
     return (
@@ -85,14 +97,10 @@ const ProductCard = ({product}) => {
                                                 style={{ border: '1px solid', borderRadius: '4px' }}
                                             />
                                             <Input 
-                                                placeholder='Product Price'
+                                                placeholder={'Product Price'}
                                                 name='price'
                                                 value={updatedProduct.price}
-                                                onChange={(e) => {
-                                                    const rawValue = e.target.value;
-                                                    const sanitizedPrice = rawValue.replace(/[^0-9.]/g, '');
-                                                    setUpdatedProduct({ ...updatedProduct, price: sanitizedPrice });
-                                                  }}
+                                                onChange={(e) => setUpdatedProduct({ ...updatedProduct, price: e.target.value})}
                                                 style={{ border: '1px solid', borderRadius: '4px' }}
                                             />
                                             <Input 
