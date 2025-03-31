@@ -88,7 +88,11 @@ const ProductCard = ({product}) => {
                                                 placeholder='Product Price'
                                                 name='price'
                                                 value={updatedProduct.price}
-                                                onChange={(e) => setUpdatedProduct({ ...updatedProduct, price: e.target.value})}
+                                                onChange={(e) => {
+                                                    const rawValue = e.target.value;
+                                                    const sanitizedPrice = rawValue.replace(/[^0-9.]/g, '');
+                                                    setUpdatedProduct({ ...updatedProduct, price: sanitizedPrice });
+                                                  }}
                                                 style={{ border: '1px solid', borderRadius: '4px' }}
                                             />
                                             <Input 

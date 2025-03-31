@@ -88,10 +88,16 @@ return <Container maxW={'1140px'} px={4}>
                                         style={{ border: '1px solid', borderRadius: '4px' }}
                                     />
                                     <Input 
-                                        placeholder='Product Price'
-                                        name='price'
+                                        placeholder="Product Price"
+                                        name="price"
                                         value={newProduct.price}
-                                        onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value})}
+                                        onChange={(e) => {
+                                            const rawValue = e.target.value;
+                                            const sanitizedValue = rawValue
+                                            .replace(/[^0-9.]/g, '')     // remove non-numeric/non-dot chars
+                                            .replace(/(\..*?)\..*/g, '$1'); // keep only the first dot
+                                            setNewProduct({ ...newProduct, price: sanitizedValue });
+                                        }}
                                         style={{ border: '1px solid', borderRadius: '4px' }}
                                     />
                                     <Input 
